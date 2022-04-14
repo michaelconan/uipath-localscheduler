@@ -1,0 +1,1087 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Automatic_Bot_Scheduler" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Diagnostics;assembly=System" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_isUpdate" Type="InArgument(x:String)" />
+  </x:Members>
+  <this:Automatic_Bot_Scheduler.in_isUpdate>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Automatic_Bot_Scheduler.in_isUpdate>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>2125,12533</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Sequence_2</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="26">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Management.Automation</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="27">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>System.Management.Automation</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Scheduling" sap:VirtualizedContainerService.HintSize="2105,12433" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="docsFolder" />
+      <Variable x:TypeArguments="x:String" Name="botName" />
+      <Variable x:TypeArguments="x:String" Name="botID" />
+      <Variable x:TypeArguments="x:String" Name="botCommand" />
+      <Variable x:TypeArguments="x:String" Name="interval" />
+      <Variable x:TypeArguments="x:String" Name="runDay" />
+      <Variable x:TypeArguments="x:String" Name="runTime" />
+      <Variable x:TypeArguments="x:String" Name="taskScript" />
+      <Variable x:TypeArguments="x:String" Name="botType" />
+      <Variable x:TypeArguments="x:String" Name="projectFile" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="userPath" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Default="[New Dictionary(Of String, String)]" Name="dictBots" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="inputArgs" />
+      <Variable x:TypeArguments="x:Boolean" Default="True" Name="argsValid" />
+      <Variable x:TypeArguments="x:String" Name="buttonVal">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" Value="" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="ui:GenericValue" Default="[&quot;&quot;]" Name="inputs" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="stopJob" />
+      <Variable x:TypeArguments="x:Boolean" Name="isUpdate" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="2063,12341" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+      <TryCatch.Variables>
+        <Variable x:TypeArguments="x:String" Name="taskName" />
+        <Variable x:TypeArguments="sco:Collection(x:String)" Name="psOutput1" />
+      </TryCatch.Variables>
+      <TryCatch.Try>
+        <Sequence sap:VirtualizedContainerService.HintSize="2025,12086" sap2010:WorkflowViewState.IdRef="Sequence_14">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Set folders" sap:VirtualizedContainerService.HintSize="1983,758" sap2010:WorkflowViewState.IdRef="Sequence_22">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sco:Collection(sd:Process)" Name="allProcesses" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[String.IsNullOrEmpty(in_isUpdate)]" DisplayName="If Update Parameter specified" sap:VirtualizedContainerService.HintSize="611,364" sap2010:WorkflowViewState.IdRef="If_21">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:GetProcesses ContinueOnError="{x:Null}" DisplayName="Get Processes" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="GetProcesses_1" Processes="[allProcesses]" />
+                  <Assign DisplayName="Assign if launched by CLI" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_44">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Boolean">[isUpdate]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Boolean">[allProcesses.Where(Function(p) p.ProcessName = "UiRobot").Any]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_37">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isUpdate]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[in_isUpdate = "True"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Else>
+            </If>
+            <ui:GetEnvironmentFolder DisplayName="Get Environment Folder" FolderPath="[docsFolder]" sap:VirtualizedContainerService.HintSize="611,62" sap2010:WorkflowViewState.IdRef="GetEnvironmentFolder_2" SpecialFolder="MyDocuments" />
+            <Assign sap:VirtualizedContainerService.HintSize="611,60" sap2010:WorkflowViewState.IdRef="Assign_32">
+              <Assign.To>
+                <OutArgument x:TypeArguments="ui:GenericValue">[userPath]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="ui:GenericValue">[docsFolder.Replace("\Documents","")]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Assign nuget package folder" sap:VirtualizedContainerService.HintSize="611,60" sap2010:WorkflowViewState.IdRef="Assign_33">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[docsFolder]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[docsFolder.Replace("Documents",".nuget\packages")]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+          <ui:InterruptibleDoWhile DisplayName="Do While - First Inputs" sap:VirtualizedContainerService.HintSize="1983,2067" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_2">
+            <ui:InterruptibleDoWhile.Body>
+              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="948,1900" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If Condition="[isUpdate]" DisplayName="If Direct Update" sap:VirtualizedContainerService.HintSize="906,445" sap2010:WorkflowViewState.IdRef="If_13">
+                  <If.Then>
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_31">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[botType]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">Update</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </If.Then>
+                  <If.Else>
+                    <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="334,296" sap2010:WorkflowViewState.IdRef="InputDialog_6" IsPassword="False" Label="Select type of bot to schedule, or perform updates:" Options="[{&quot;Digital Lab Bot (Robot Runner)&quot;,&quot;Local bot project (Studio)&quot;,&quot;Update currently scheduled bots to latest version&quot;, &quot;Import Scheduled Task from XML File&quot;, &quot;Add Input Arguments (local only)&quot;}]" Title="Schedule Bot Run">
+                      <ui:InputDialog.Result>
+                        <OutArgument x:TypeArguments="x:String">[botType]</OutArgument>
+                      </ui:InputDialog.Result>
+                    </ui:InputDialog>
+                  </If.Else>
+                </If>
+                <If Condition="[botType.Contains(&quot;Arguments&quot;)]" DisplayName="If Input Arguments" sap:VirtualizedContainerService.HintSize="906,1323" sap2010:WorkflowViewState.IdRef="If_10">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="761,1174" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InterruptibleDoWhile DisplayName="Do While" sap:VirtualizedContainerService.HintSize="719,1082" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
+                        <ui:InterruptibleDoWhile.Body>
+                          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="683,915" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="641,242" sap2010:WorkflowViewState.IdRef="InputDialog_7" IsPassword="False" Label="[&quot;Please add arguments to the bot in a valid JSON format (i.e. {&quot;&quot;arg1name&quot;&quot;:&quot;&quot;arg1value&quot;&quot;})&quot;]" Title="Add Input Arguments">
+                              <ui:InputDialog.Result>
+                                <OutArgument x:TypeArguments="ui:GenericValue">[inputArgs]</OutArgument>
+                              </ui:InputDialog.Result>
+                            </ui:InputDialog>
+                            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="641,292" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+                              <TryCatch.Try>
+                                <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonObject="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1" JsonString="[inputArgs]" />
+                              </TryCatch.Try>
+                              <TryCatch.Catches>
+                                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,22" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ActivityAction x:TypeArguments="s:Exception">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                    </ActivityAction.Argument>
+                                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_25">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Boolean">[argsValid]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </ActivityAction>
+                                </Catch>
+                              </TryCatch.Catches>
+                            </TryCatch>
+                            <If Condition="[NOT argsValid]" DisplayName="If Invalid JSON" sap:VirtualizedContainerService.HintSize="641,209" sap2010:WorkflowViewState.IdRef="If_9">
+                              <If.Then>
+                                <ui:MessageBox Caption="{x:Null}" Buttons="OkCancel" ChosenButton="[buttonVal]" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_6" Text="[&quot;The JSON format of arguments provided is invalid. Please try again or cancel to retry from the beginning&quot;]" />
+                              </If.Then>
+                              <If.Else>
+                                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_26">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="ui:GenericValue">[inputs]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="ui:GenericValue">[" --input """ + inputArgs.Replace("""","'")+""""]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </ui:InterruptibleDoWhile.Body>
+                        <ui:InterruptibleDoWhile.Condition>
+                          <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="NOT argsValid and buttonVal = &quot;Ok&quot;" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_1" />
+                        </ui:InterruptibleDoWhile.Condition>
+                      </ui:InterruptibleDoWhile>
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </ui:InterruptibleDoWhile.Body>
+            <ui:InterruptibleDoWhile.Condition>
+              <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="buttonVal = &quot;Cancel&quot;" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_1" />
+            </ui:InterruptibleDoWhile.Condition>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:InterruptibleDoWhile>
+          <If Condition="[botType = &quot;&quot;]" DisplayName="If Job Stopped" sap:VirtualizedContainerService.HintSize="1983,52" sap2010:WorkflowViewState.IdRef="If_15">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_36">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[stopJob]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Throw Exception="[New Exception(&quot;Job Stopped&quot;)]" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              </Sequence>
+            </If.Then>
+          </If>
+          <If Condition="[botType.Contains(&quot;Update&quot;) or botType.Contains(&quot;Import&quot;)]" DisplayName="If updating current schedules" sap:VirtualizedContainerService.HintSize="1983,3636" sap2010:WorkflowViewState.IdRef="If_6">
+            <If.Else>
+              <Sequence sap:VirtualizedContainerService.HintSize="1446,3486" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If Condition="[botType.Contains(&quot;Runner&quot;)]" DisplayName="If Robot Runner" sap:VirtualizedContainerService.HintSize="1404,2388" sap2010:WorkflowViewState.IdRef="If_4">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="833,2238" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="ui:GenericValue" Name="botChosen" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Sequence DisplayName="Get All Server Bots" sap:VirtualizedContainerService.HintSize="791,1518" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="749,60" sap2010:WorkflowViewState.IdRef="Assign_43">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="ui:GenericValue">[inputs]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="ui:GenericValue">[""]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each Folder" sap:VirtualizedContainerService.HintSize="749,1326" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[Directory.GetDirectories(docsFolder).Where(Function(f) Regex.IsMatch(Path.GetFileName(f),&quot;[\w-]{35,}&quot;)).OrderByDescending(function (x) new FileInfo(x).LastWriteTime).ToArray]">
+                          <ui:ForEach.Body>
+                            <ActivityAction x:TypeArguments="x:String">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="x:String" Name="fold" />
+                              </ActivityAction.Argument>
+                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="713,1191" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                                <Sequence.Variables>
+                                  <Variable x:TypeArguments="x:Boolean" Name="botFound" />
+                                </Sequence.Variables>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="671,62" sap2010:WorkflowViewState.IdRef="WriteLine_12" Text="[&quot;Root: &quot;+fold]" />
+                                <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke FolderLoop workflow" sap:VirtualizedContainerService.HintSize="671,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="FolderLoop.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="folder">[fold]</InArgument>
+                                    <OutArgument x:TypeArguments="x:Boolean" x:Key="botFound">[botFound]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="infoFile">[projectFile]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="out_botName">[botName]</OutArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <If Condition="[botFound and not botName is Nothing]" DisplayName="If found bot and name" sap:VirtualizedContainerService.HintSize="671,844" sap2010:WorkflowViewState.IdRef="If_12">
+                                  <If.Then>
+                                    <Sequence sap:VirtualizedContainerService.HintSize="526,694" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If Condition="[dictBots.Keys.Contains(botName)]" DisplayName="If first (latest) version" sap:VirtualizedContainerService.HintSize="484,602" sap2010:WorkflowViewState.IdRef="If_24">
+                                        <If.Else>
+                                          <Sequence sap:VirtualizedContainerService.HintSize="304,452" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_27">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:String">[projectFile]</OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:String">[projectFile.Replace("automation.info","Project.json")]</InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_28">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:String">[projectFile]</OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:String">[projectFile.Replace(userPath,"%USERPROFILE%")]</InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_29">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:String">[botID]</OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:String">["-p " + fold.Split("\"c)(fold.Split("\"c).Count-1)]</InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:String">[dictBots(botName)]</OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:String">[botID]</InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                          </Sequence>
+                                        </If.Else>
+                                      </If>
+                                    </Sequence>
+                                  </If.Then>
+                                </If>
+                              </Sequence>
+                            </ActivityAction>
+                          </ui:ForEach.Body>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:ForEach>
+                      </Sequence>
+                      <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="791,296" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Please select bot to run from bots in Robot Runner - ensure latest version has been installed" Options="[dictBots.Keys.ToArray]" Title="Schedule Bot Run">
+                        <ui:InputDialog.Result>
+                          <OutArgument x:TypeArguments="ui:GenericValue">[botChosen]</OutArgument>
+                        </ui:InputDialog.Result>
+                      </ui:InputDialog>
+                      <If Condition="[botChosen = &quot;&quot;]" DisplayName="If Job Stopped" sap:VirtualizedContainerService.HintSize="791,52" sap2010:WorkflowViewState.IdRef="If_16">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_38">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[stopJob]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Throw Exception="[New Exception(&quot;Job Stopped&quot;)]" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                          </Sequence>
+                        </If.Then>
+                      </If>
+                      <Assign sap:VirtualizedContainerService.HintSize="791,60" sap2010:WorkflowViewState.IdRef="Assign_45">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[botName]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[botChosen]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="791,60" sap2010:WorkflowViewState.IdRef="Assign_39">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[botID]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[dictBots(botChosen)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap:VirtualizedContainerService.HintSize="526,915" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="x:String" Name="jsonText" />
+                        <Variable x:TypeArguments="x:Boolean" Name="mainExists" />
+                        <Variable x:TypeArguments="ui:GenericValue" Name="mainFile" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="484,59" sap2010:WorkflowViewState.IdRef="MessageBox_3" Text="[&quot;Please select project.json file associated with bot.&quot;]" TopMost="True" />
+                      <ui:SelectFile DisplayName="Select File" Filter="Project files (*.json*)|*.json*" sap:VirtualizedContainerService.HintSize="484,22" sap2010:WorkflowViewState.IdRef="SelectFile_1" SelectedFile="[projectFile]" />
+                      <ui:ReadTextFile Content="[jsonText]" DisplayName="Read Text File" FileName="[projectFile]" sap:VirtualizedContainerService.HintSize="484,80" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+                      <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[botName]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[jsonText.Split(chr(34))(3)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_24">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="ui:GenericValue">[mainFile]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="ui:GenericValue">[projectFile.replace("project.json",jsonText.split(chr(34))(11))]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:PathExists DisplayName="Path Exists" Exists="[mainExists]" sap:VirtualizedContainerService.HintSize="484,90" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[mainFile]" PathType="File" />
+                      <If Condition="[mainExists]" DisplayName="If Main XAML exists" sap:VirtualizedContainerService.HintSize="484,212" sap2010:WorkflowViewState.IdRef="If_8">
+                        <If.Then>
+                          <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="230,62" sap2010:WorkflowViewState.IdRef="WriteLine_11" Text="[&quot;Main.xaml located at: &quot; + mainFile]" />
+                        </If.Then>
+                        <If.Else>
+                          <Throw Exception="[new BusinessRuleException(&quot;Main.xaml file referenced cannot be located.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                        </If.Else>
+                      </If>
+                    </Sequence>
+                  </If.Else>
+                </If>
+                <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="1404,296" sap2010:WorkflowViewState.IdRef="InputDialog_2" IsPassword="False" Label="Select schedule cadence for bot run." Options="[{&quot;DAILY&quot;,&quot;WEEKLY&quot;,&quot;MONTHLY&quot;}]" Title="Schedule Bot Run">
+                  <ui:InputDialog.Result>
+                    <OutArgument x:TypeArguments="x:String">[interval]</OutArgument>
+                  </ui:InputDialog.Result>
+                </ui:InputDialog>
+                <If Condition="[interval = &quot;&quot;]" DisplayName="If Job Stopped" sap:VirtualizedContainerService.HintSize="1404,52" sap2010:WorkflowViewState.IdRef="If_17">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_40">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[stopJob]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Throw Exception="[New Exception(&quot;Job Stopped&quot;)]" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="Throw_4" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+                <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[interval]" sap:VirtualizedContainerService.HintSize="1404,164" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                  <Switch.Default>
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[runDay]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">
+                          <Literal x:TypeArguments="x:String" Value="" />
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Switch.Default>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence x:Key="WEEKLY" sap:VirtualizedContainerService.HintSize="526,580" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="484,296" sap2010:WorkflowViewState.IdRef="InputDialog_3" IsPassword="False" Label="Select day of week to run:" Options="[{&quot;SUN&quot;,&quot;MON&quot;,&quot;TUE&quot;,&quot;WED&quot;,&quot;THU&quot;,&quot;FRI&quot;,&quot;SAT&quot;}]" Title="Schedule Bot Run">
+                      <ui:InputDialog.Result>
+                        <OutArgument x:TypeArguments="x:String">[runDay]</OutArgument>
+                      </ui:InputDialog.Result>
+                    </ui:InputDialog>
+                    <If Condition="[runDay = &quot;&quot;]" DisplayName="If Job Stopped" sap:VirtualizedContainerService.HintSize="484,52" sap2010:WorkflowViewState.IdRef="If_18">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_41">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">[stopJob]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Throw Exception="[New Exception(&quot;Job Stopped&quot;)]" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="Throw_5" />
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                    <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[runDay]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">["/D "+runDay]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                  <Sequence x:Key="MONTHLY" sap:VirtualizedContainerService.HintSize="376,434" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="334,242" sap2010:WorkflowViewState.IdRef="InputDialog_4" IsPassword="False" Label="Input day of month to run as number:" Title="Schedule Bot Run">
+                      <ui:InputDialog.Result>
+                        <OutArgument x:TypeArguments="x:String">[runDay]</OutArgument>
+                      </ui:InputDialog.Result>
+                    </ui:InputDialog>
+                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[runDay]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">["/D "+runDay]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </Switch>
+                <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="1404,242" sap2010:WorkflowViewState.IdRef="InputDialog_5" IsPassword="False" Label="Input time of day for bot to run (as HH:mm, 24 hour time):" Title="Schedule Bot Run">
+                  <ui:InputDialog.Result>
+                    <OutArgument x:TypeArguments="x:String">[runTime]</OutArgument>
+                  </ui:InputDialog.Result>
+                </ui:InputDialog>
+                <If Condition="[runTime = &quot;&quot;]" DisplayName="If Job Stopped" sap:VirtualizedContainerService.HintSize="1404,52" sap2010:WorkflowViewState.IdRef="If_19">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_42">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[stopJob]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Throw Exception="[New Exception(&quot;Job Stopped&quot;)]" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </If.Else>
+          </If>
+          <If Condition="[botType.Contains(&quot;Update&quot;) or botType.Contains(&quot;Import&quot;)]" DisplayName="If Update" sap:VirtualizedContainerService.HintSize="1983,5321" sap2010:WorkflowViewState.IdRef="If_7">
+            <If.Then>
+              <If Condition="[botType.Contains(&quot;Update&quot;)]" DisplayName="If Update" sap:VirtualizedContainerService.HintSize="755,615" sap2010:WorkflowViewState.IdRef="If_23">
+                <If.Then>
+                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke UpdateTask workflow" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="UpdateTask.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="pkgFolder">[docsFolder]</InArgument>
+                      <InArgument x:TypeArguments="x:Boolean" x:Key="in_Update">[isUpdate]</InArgument>
+                      <InArgument x:TypeArguments="x:Boolean" x:Key="isScheduler">False</InArgument>
+                      <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Scheduled" />
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap:VirtualizedContainerService.HintSize="376,465" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="taskXML" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_8" Text="[&quot;Please select the XML file that was exported from Windows Task Scheduler&quot;]" />
+                    <ui:SelectFile DisplayName="Select File" Filter="XML files (*.xml*)|*.xml*" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="SelectFile_2" SelectedFile="[taskXML]" />
+                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CreateTask workflow" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="CreateTask.xaml">
+                      <ui:InvokeWorkflowFile.Arguments>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_BotName" />
+                        <InArgument x:TypeArguments="x:String" x:Key="in_BotCommand" />
+                        <InArgument x:TypeArguments="x:String" x:Key="in_Interval" />
+                        <InArgument x:TypeArguments="x:String" x:Key="in_Day" />
+                        <InArgument x:TypeArguments="x:String" x:Key="in_Time" />
+                        <InArgument x:TypeArguments="x:Boolean" x:Key="in_Import">True</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_XMLFile">[taskXML]</InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="out_taskName" />
+                      </ui:InvokeWorkflowFile.Arguments>
+                    </ui:InvokeWorkflowFile>
+                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_9" Text="[&quot;Task Imported.&quot;]" />
+                  </Sequence>
+                </If.Else>
+              </If>
+            </If.Then>
+            <If.Else>
+              <Sequence sap:VirtualizedContainerService.HintSize="1183,5171" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If Condition="[botType.Contains(&quot;Runner&quot;)]" DisplayName="If Runner" sap:VirtualizedContainerService.HintSize="1141,1284" sap2010:WorkflowViewState.IdRef="If_5">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="792,1134" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="x:String" Name="autoBotID" />
+                        <Variable x:TypeArguments="x:String" Name="autoInputs" />
+                        <Variable x:TypeArguments="x:Boolean" Name="autoScheduled" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Sequence DisplayName="Schedule Daily Auto-Updates" sap:VirtualizedContainerService.HintSize="750,1042" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke UpdateTask workflow" sap:VirtualizedContainerService.HintSize="708,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="UpdateTask.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:String" x:Key="pkgFolder">[docsFolder]</InArgument>
+                            <InArgument x:TypeArguments="x:Boolean" x:Key="in_Update">False</InArgument>
+                            <InArgument x:TypeArguments="x:Boolean" x:Key="isScheduler">True</InArgument>
+                            <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Scheduled">[autoScheduled]</OutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <If Condition="[autoScheduled]" DisplayName="If Automatic Updates Scheduled" sap:VirtualizedContainerService.HintSize="708,797" sap2010:WorkflowViewState.IdRef="If_14">
+                          <If.Else>
+                            <Sequence sap:VirtualizedContainerService.HintSize="563,647" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If Condition="[dictBots.Keys.Where(Function(k) k.Contains(&quot;Automatic Bot Scheduling&quot;)).Any]" DisplayName="If Auto Scheduler Installed from Lab" sap:VirtualizedContainerService.HintSize="521,555" sap2010:WorkflowViewState.IdRef="If_22">
+                                <If.Then>
+                                  <Sequence sap:VirtualizedContainerService.HintSize="376,405" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_34">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:String">[autoBotID]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:String">[dictBots(dictBots.Keys.Where(Function(k) k.Contains("Automatic Bot Scheduling")).First)]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_35">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:String">[autoInputs]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:String">[" --input ""{'in_isUpdate' : True}"""]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CreateTask workflow" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="CreateTask.xaml">
+                                      <ui:InvokeWorkflowFile.Arguments>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_BotName">Automatic Bot Scheduling</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_BotCommand">[autoBotID]</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_Interval">DAILY</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_Day">
+                                          <Literal x:TypeArguments="x:String" Value="" />
+                                        </InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_Time">12:23</InArgument>
+                                        <InArgument x:TypeArguments="x:Boolean" x:Key="in_Import">False</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_XMLFile" />
+                                        <OutArgument x:TypeArguments="x:String" x:Key="out_taskName" />
+                                      </ui:InvokeWorkflowFile.Arguments>
+                                    </ui:InvokeWorkflowFile>
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap:VirtualizedContainerService.HintSize="304,354" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_23">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[projectFile]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[projectFile.Replace(userPath,"%USERPROFILE%")]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[botID]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">["-f '"+projectFile+"'"]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="[projectFile]" />
+                    </Sequence>
+                  </If.Else>
+                </If>
+                <If Condition="[isnothing(botID)]" DisplayName="If Bot not found" sap:VirtualizedContainerService.HintSize="1141,3755" sap2010:WorkflowViewState.IdRef="If_3">
+                  <If.Then>
+                    <ui:MessageBox ChosenButton="{x:Null}" Buttons="Ok" Caption="Scheduler Bot" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;Bot not found. Please try again.&quot;]" TopMost="True" />
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap:VirtualizedContainerService.HintSize="563,3605" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="x:String" Name="exportScript" />
+                        <Variable x:TypeArguments="x:String" Name="exportPath" />
+                        <Variable x:TypeArguments="x:Boolean" Name="exportExists" />
+                        <Variable x:TypeArguments="x:String" Name="exportXML" />
+                        <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="userLine" />
+                        <Variable x:TypeArguments="s:String[]" Name="updateLines" />
+                        <Variable x:TypeArguments="x:Int32" Name="lineCount" />
+                        <Variable x:TypeArguments="sco:Collection(x:String)" Name="psOutput2" />
+                        <Variable x:TypeArguments="x:String" Name="deleteScript" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CreateTask workflow" sap:VirtualizedContainerService.HintSize="521,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="CreateTask.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_BotName">[botName]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_BotCommand">[botID]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_Interval">[interval]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_Day">[runDay]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_Time">[runTime]</InArgument>
+                          <InArgument x:TypeArguments="x:Boolean" x:Key="in_Import">False</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_XMLFile" />
+                          <OutArgument x:TypeArguments="x:String" x:Key="out_taskName">[taskName]</OutArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <Assign sap:VirtualizedContainerService.HintSize="521,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[exportPath]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[environment.CurrentDirectory+"\Output\"+botName+" Task to Share.xml"]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="521,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[exportScript]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[("SCHTASKS /query /xml /tn '"+taskName+"' &gt; '"+ exportPath+"'").ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:InvokePowerShell x:TypeArguments="x:String" CommandText="[exportScript]" ContinueOnError="True" DisplayName="Invoke Power Shell" sap:VirtualizedContainerService.HintSize="521,59" sap2010:WorkflowViewState.IdRef="InvokePowerShell`1_2" IsScript="True" Output="[psOutput2]" />
+                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="521,62" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="[String.Join(Environment.NewLine, psOutput2)]" />
+                      <DoWhile DisplayName="Do While" sap:VirtualizedContainerService.HintSize="521,486" sap2010:WorkflowViewState.IdRef="DoWhile_1">
+                        <DoWhile.Condition>
+                          <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="NOT exportExists" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_1" />
+                        </DoWhile.Condition>
+                        <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="438,322" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                          <TryCatch.Try>
+                            <ui:PathExists DisplayName="Path Exists" Exists="[exportExists]" sap:VirtualizedContainerService.HintSize="334,90" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[exportPath]" PathType="File" />
+                          </TryCatch.Try>
+                          <TryCatch.Catches>
+                            <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ActivityAction x:TypeArguments="s:Exception">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                </ActivityAction.Argument>
+                                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_18">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Boolean">[exportExists]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </ActivityAction>
+                            </Catch>
+                          </TryCatch.Catches>
+                        </TryCatch>
+                      </DoWhile>
+                      <ui:ReadTextFile Content="[exportXML]" DisplayName="Read Text File" FileName="[exportPath]" sap:VirtualizedContainerService.HintSize="521,80" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+                      <Assign sap:VirtualizedContainerService.HintSize="521,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="s:String[]">[updateLines]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="s:String[]">[{"&lt;GroupId&gt;S-1-5-32-545&lt;/GroupId&gt;","&lt;RunLevel&gt;HighestAvailable&lt;/RunLevel&gt;"}]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[lineCount]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="521,720" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[{&quot;&lt;UserId&gt;.*&lt;/UserId&gt;&quot;,&quot;&lt;LogonType&gt;.*&lt;/LogonType&gt;&quot;}]">
+                        <ui:ForEach.Body>
+                          <ActivityAction x:TypeArguments="x:String">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="x:String" Name="line" />
+                            </ActivityAction.Argument>
+                            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="438,585" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                              <TryCatch.Try>
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,353" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:Matches DisplayName="Matches XML Lines" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[exportXML]" IsBuilderTabModified="False" Pattern="[line]" RegexOption="IgnoreCase, Compiled" Result="[userLine]" />
+                                  <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,62" sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="[userLine(0).tostring]" />
+                                  <Assign DisplayName="Assign replace tag in XML" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_20">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[exportXML]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String">[exportXML.Replace(userLine(0).ToString,updateLines(lineCount))]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </Sequence>
+                              </TryCatch.Try>
+                              <TryCatch.Catches>
+                                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,22" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ActivityAction x:TypeArguments="s:Exception">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                    </ActivityAction.Argument>
+                                    <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="230,62" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="[exception.ToString]" />
+                                  </ActivityAction>
+                                </Catch>
+                              </TryCatch.Catches>
+                            </TryCatch>
+                          </ActivityAction>
+                        </ui:ForEach.Body>
+                      </ui:ForEach>
+                      <If Condition="[inputs &lt;&gt; &quot;&quot;]" DisplayName="If adding args" sap:VirtualizedContainerService.HintSize="521,603" sap2010:WorkflowViewState.IdRef="If_25">
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="376,453" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign DisplayName="Assign - script to delete task" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_46">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[deleteScript]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">["SCHTASKS /DELETE /TN """ + taskName + """ /F"]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <ui:InvokePowerShell x:TypeArguments="x:String" CommandText="[deleteScript]" ContinueOnError="False" DisplayName="Invoke Power Shell" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="InvokePowerShell`1_3" IsScript="True" Output="[psOutput1]" />
+                            <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,62" sap2010:WorkflowViewState.IdRef="WriteLine_13" Text="[String.Join(Environment.NewLine, psOutput1)]" />
+                            <Assign DisplayName="Assign replace inputs in XML" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_47">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[exportXML]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[exportXML.Replace(" ^&amp;amp; exit", inputs + " ^&amp;amp; exit")]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </Sequence>
+                        </If.Then>
+                      </If>
+                      <ui:WriteTextFile DisplayName="Write Text File" FileName="[exportPath]" sap:VirtualizedContainerService.HintSize="521,134" sap2010:WorkflowViewState.IdRef="WriteTextFile_2" Text="[exportXML]" />
+                      <If Condition="[inputs &lt;&gt; &quot;&quot;]" DisplayName="If adding args" sap:VirtualizedContainerService.HintSize="521,263" sap2010:WorkflowViewState.IdRef="If_26">
+                        <If.Then>
+                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CreateTask workflow" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="CreateTask.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_BotName" />
+                              <InArgument x:TypeArguments="x:String" x:Key="in_BotCommand" />
+                              <InArgument x:TypeArguments="x:String" x:Key="in_Interval" />
+                              <InArgument x:TypeArguments="x:String" x:Key="in_Day" />
+                              <InArgument x:TypeArguments="x:String" x:Key="in_Time" />
+                              <InArgument x:TypeArguments="x:Boolean" x:Key="in_Import">True</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_XMLFile">[exportPath]</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_taskName" />
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                        </If.Then>
+                      </If>
+                      <Assign sap:VirtualizedContainerService.HintSize="521,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[botCommand]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[("start 'UiPath Robot' /min 'C:\Program Files (x86)\UiPath\Studio\UiRobot.exe' "+botID+inputs+" ^&amp; exit").Replace("'",chr(34))]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:WriteTextFile DisplayName="Write Text File" FileName="[&quot;Output\&quot;+botName+&quot; Script to run.bat&quot;]" sap:VirtualizedContainerService.HintSize="521,134" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[botCommand]" />
+                      <ui:MessageBox ChosenButton="{x:Null}" Buttons="Ok" Caption="Scheduler Bot" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="521,59" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[&quot;Bot scheduled.&quot;]" TopMost="True" />
+                    </Sequence>
+                  </If.Else>
+                </If>
+              </Sequence>
+            </If.Else>
+          </If>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="2029,22" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
+            </ActivityAction.Argument>
+            <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_4" Text="[&quot;Cannot find main bot file (xaml) referenced in project file. Please update bot files or project.json to accurately reflect main bot file.&quot;]" />
+          </ActivityAction>
+        </Catch>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="2029,22" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="755,297" sap2010:WorkflowViewState.IdRef="Sequence_30">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If Condition="[stopJob]" sap:VirtualizedContainerService.HintSize="713,208" sap2010:WorkflowViewState.IdRef="If_20">
+                <If.Then>
+                  <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_7" Text="[&quot;The bot job was ended by the user.&quot;]" />
+                </If.Then>
+                <If.Else>
+                  <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_5" Text="[&quot;The bot encountered the following exception: &quot; + exception.Message + &quot; at &quot; + exception.Source]" />
+                </If.Else>
+              </If>
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>

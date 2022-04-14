@@ -1,0 +1,420 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="test" this:test.in_Update="False" this:test.isScheduler="False" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="pkgFolder" Type="InArgument(x:String)" />
+    <x:Property Name="in_Update" Type="InArgument(x:Boolean)" />
+    <x:Property Name="isScheduler" Type="InArgument(x:Boolean)" />
+    <x:Property Name="out_Scheduled" Type="OutArgument(x:Boolean)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>2643,3126</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>test_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="48">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="24">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Update Tasks" sap:VirtualizedContainerService.HintSize="1194,3061" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ui:GenericValue" Name="qry" />
+      <Variable x:TypeArguments="sco:Collection(x:String)" Name="psQry" />
+      <Variable x:TypeArguments="sd:DataTable" Name="taskTable" />
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[new List(of String)]" Name="taskList" />
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[new List(of String)]" Name="allTaskList" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="isBot" />
+      <Variable x:TypeArguments="ui:GenericValue" Default="[0]" Name="botUpdates" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="password" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="1152,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[password]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[Nothing]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:BuildDataTable DataTable="[taskTable]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="1152,59" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Task&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+    <Assign sap:VirtualizedContainerService.HintSize="1152,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[qry]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">["SCHTASKS /query /fo LIST /v"]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:InvokePowerShell x:TypeArguments="x:String" CommandText="[qry]" ContinueOnError="True" DisplayName="Invoke Power Shell" sap:VirtualizedContainerService.HintSize="1152,59" sap2010:WorkflowViewState.IdRef="InvokePowerShell`1_1" IsScript="True" Output="[psQry]" />
+    <Assign sap:VirtualizedContainerService.HintSize="1152,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[allTaskList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[psQry.Where(function (x) x.StartsWith("TaskName:") OR x.StartsWith("Task To Run:")).ToList]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each Task in Scheduler " sap:VirtualizedContainerService.HintSize="1152,294" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[allTaskList]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+          </ActivityAction.Argument>
+          <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[item.Split(&quot;:&quot;c)(0)]" sap:VirtualizedContainerService.HintSize="497,160" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+            <Sequence x:Key="TaskName" sap:VirtualizedContainerService.HintSize="526,609" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="484,61" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="[item]" />
+              <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="ui:GenericValue">[isBot]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="ui:GenericValue">[False]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[item.Contains(&quot;\BotRuns\&quot;)]" DisplayName="If Bot Task" sap:VirtualizedContainerService.HintSize="484,362" sap2010:WorkflowViewState.IdRef="If_1">
+                <If.Then>
+                  <Sequence sap:VirtualizedContainerService.HintSize="304,214" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <AddToCollection x:TypeArguments="x:String" Collection="[taskList]" DisplayName="AddToCollection&lt;String&gt;" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1" Item="[item.Replace(&quot;TaskName: &quot;,&quot;&quot;).Trim]" />
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_11">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="ui:GenericValue">[isBot]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="ui:GenericValue">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+              </If>
+            </Sequence>
+            <Sequence x:Key="Task To Run" sap:VirtualizedContainerService.HintSize="526,435" sap2010:WorkflowViewState.IdRef="Sequence_3">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If Condition="[isBot]" DisplayName="If Prior Item is Bot" sap:VirtualizedContainerService.HintSize="484,386" sap2010:WorkflowViewState.IdRef="If_3">
+                <If.Then>
+                  <Sequence sap:VirtualizedContainerService.HintSize="242,238" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <AddToCollection x:TypeArguments="x:String" Collection="[taskList]" DisplayName="AddToCollection&lt;String&gt;" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2" Item="[item.Replace(&quot;Task To Run: &quot;,&quot;&quot;).Trim]" />
+                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[taskList.ToArray]" DataTable="[taskTable]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                    <ClearCollection x:TypeArguments="x:String" Collection="[taskList]" DisplayName="Clear Collection" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="ClearCollection`1_1" />
+                  </Sequence>
+                </If.Then>
+              </If>
+            </Sequence>
+          </Switch>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <If Condition="[isScheduler]" sap:VirtualizedContainerService.HintSize="1152,2137" sap2010:WorkflowViewState.IdRef="If_10">
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[out_Scheduled]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">[taskTable.AsEnumerable().Where(Function(r) r("Name").ToString.Contains("Automatic Bot Scheduling")).Any]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="845,1989" sap2010:WorkflowViewState.IdRef="Sequence_13">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[taskTable]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="803,1549" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:ForEachRow.Body>
+              <ActivityAction x:TypeArguments="sd:DataRow">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="753,1401" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="processID" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[row(&quot;Task&quot;).ToString.Contains(&quot; -p&quot;) OR row(&quot;Task&quot;).ToString.Contains(&quot; --process&quot;)]" DisplayName="If includes process execution" sap:VirtualizedContainerService.HintSize="711,1201" sap2010:WorkflowViewState.IdRef="If_2">
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="539,1053" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="x:String" Name="latestID" />
+                          <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="versionID" />
+                          <Variable x:TypeArguments="x:String" Name="botGUID" />
+                          <Variable x:TypeArguments="x:String" Name="newTask" />
+                          <Variable x:TypeArguments="ui:GenericValue" Name="updateScript" />
+                          <Variable x:TypeArguments="sco:Collection(x:String)" Name="psUpdate" />
+                          <Variable x:TypeArguments="x:Int32" Name="switchNum" />
+                        </Sequence.Variables>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="Assign get process ID from task" sap:VirtualizedContainerService.HintSize="497,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[processID]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[split(row("Task").ToString,"execute -p ")(1).split(" "c)(0)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:Matches DisplayName="Matches - get version" sap:VirtualizedContainerService.HintSize="497,59" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[processID]" IsBuilderTabModified="False" Pattern="-v\d{5}" RegexOption="IgnoreCase, Compiled" Result="[versionID]" />
+                        <Assign DisplayName="Assign - replace version" sap:VirtualizedContainerService.HintSize="497,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[botGUID]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[If(versionID.Any, processID.Replace(versionID(0).tostring,""), processID)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="497,61" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="[&quot;Bot ID: &quot; + botGUID]" />
+                        <Assign DisplayName="Assign - get latest package with same GUID" sap:VirtualizedContainerService.HintSize="497,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[latestID]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[directory.GetDirectories(pkgFolder,botGUID+"*").OrderByDescending(function (x) new FileInfo(x).LastWriteTime).FirstOrDefault]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="Assign - get latest package with same GUID" sap:VirtualizedContainerService.HintSize="497,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[latestID]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[Path.GetFileName(latestID)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign sap:VirtualizedContainerService.HintSize="497,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[switchNum]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[Math.Abs(CInt(latestId &lt;&gt; "") +CInt(latestID = processID))]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="497,61" sap2010:WorkflowViewState.IdRef="WriteLine_7" Text="[&quot;Latest Bot version: &quot;+latestID]" />
+                        <Switch x:TypeArguments="x:Int32" DisplayName="Switch - need update (version exists, not lastest)" Expression="[switchNum]" sap:VirtualizedContainerService.HintSize="497,160" sap2010:WorkflowViewState.IdRef="Switch`1_4">
+                          <Switch.Default>
+                            <Sequence sap:VirtualizedContainerService.HintSize="526,1992" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="x:Boolean" Name="cmd" />
+                              </Sequence.Variables>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If Condition="[password Is Nothing]" DisplayName="If No Password" sap:VirtualizedContainerService.HintSize="484,386" sap2010:WorkflowViewState.IdRef="If_9">
+                                <If.Then>
+                                  <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="334,238" sap2010:WorkflowViewState.IdRef="InputDialog_2" IsPassword="True" Label="[&quot;GUID: &quot; + environment.UserName + environment.NewLine + environment.NewLine + &quot; Please enter GUID Password to authorize updates:&quot;]" Title="Update Scheduled Bot Runs">
+                                    <ui:InputDialog.Result>
+                                      <OutArgument x:TypeArguments="ui:GenericValue">[password]</OutArgument>
+                                    </ui:InputDialog.Result>
+                                  </ui:InputDialog>
+                                </If.Then>
+                              </If>
+                              <ui:UiElementExists DisplayName="Element Exists" Exists="[cmd]" sap:VirtualizedContainerService.HintSize="484,68" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" TimeoutMS="300" WaitForReady="INTERACTIVE" />
+                                </ui:UiElementExists.Target>
+                              </ui:UiElementExists>
+                              <If Condition="[cmd]" DisplayName="If cmd open" sap:VirtualizedContainerService.HintSize="484,51" sap2010:WorkflowViewState.IdRef="If_7">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Else>
+                                  <Sequence sap:VirtualizedContainerService.HintSize="336,357" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:StartProcess Arguments="{x:Null}" WorkingDirectory="{x:Null}" DisplayName="Start Process" FileName="cmd.exe" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+                                    <ui:WaitUiElementAppear FoundElement="{x:Null}" DisplayName="Find Element 'cmd.exe Administrator:'" sap:VirtualizedContainerService.HintSize="314,106" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_1" WaitActive="False" WaitVisible="False">
+                                      <ui:WaitUiElementAppear.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="493b2b16a8c3c724abcbf7d5a52e5f7a" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:WaitUiElementAppear.Target>
+                                    </ui:WaitUiElementAppear>
+                                  </Sequence>
+                                </If.Else>
+                              </If>
+                              <Assign DisplayName="Assign - update process ID" sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[newTask]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[row("Task").ToString.Replace(processID,latestID).Replace(chr(34),"'")]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="ui:GenericValue">[updateScript]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="ui:GenericValue">["SCHTASKS /Change /TN "+chr(34)+row("Name").ToString + chr(34)+" /TR " +chr(34)+ newTask+chr(34)]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="484,61" sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="[updateScript]" />
+                              <Sequence DisplayName="Write Script into CMD" sap:VirtualizedContainerService.HintSize="484,874" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:SetToClipboard DisplayName="Set To Clipboard" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="SetToClipboard_1" Text="[updateScript]" />
+                                <ui:SendHotkey DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="False" ClickBeforeTyping="False" DelayBefore="500" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="v" KeyModifiers="Ctrl" SendWindowMessages="False" SpecialKey="False">
+                                  <ui:SendHotkey.Target>
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" WaitForReady="INTERACTIVE" />
+                                  </ui:SendHotkey.Target>
+                                </ui:SendHotkey>
+                                <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" Activate="False" ClickBeforeTyping="False" DelayMS="1000" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="enter" KeyModifiers="None" SendWindowMessages="True" SpecialKey="True">
+                                  <ui:SendHotkey.Target>
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" WaitForReady="INTERACTIVE" />
+                                  </ui:SendHotkey.Target>
+                                </ui:SendHotkey>
+                                <ui:SetToClipboard DisplayName="Set To Clipboard" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="SetToClipboard_2" Text="[password]" />
+                                <ui:SendHotkey DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="False" ClickBeforeTyping="False" DelayBefore="500" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="v" KeyModifiers="Ctrl" SendWindowMessages="False" SpecialKey="False">
+                                  <ui:SendHotkey.Target>
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" WaitForReady="INTERACTIVE" />
+                                  </ui:SendHotkey.Target>
+                                </ui:SendHotkey>
+                                <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" Activate="False" ClickBeforeTyping="False" DelayMS="1000" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="SendHotkey_4" Key="enter" KeyModifiers="None" SendWindowMessages="True" SpecialKey="True">
+                                  <ui:SendHotkey.Target>
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" WaitForReady="INTERACTIVE" />
+                                  </ui:SendHotkey.Target>
+                                </ui:SendHotkey>
+                              </Sequence>
+                              <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_13">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="ui:GenericValue">[botUpdates]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="ui:GenericValue">[2]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </Sequence>
+                          </Switch.Default>
+                          <If x:Key="2" Condition="[botUpdates = 2]" DisplayName="If already found one" sap:VirtualizedContainerService.HintSize="484,208" sap2010:WorkflowViewState.IdRef="If_6">
+                            <If.Else>
+                              <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="ui:GenericValue">[botUpdates]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="ui:GenericValue">[1]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </If.Else>
+                          </If>
+                          <x:Null x:Key="0" />
+                        </Switch>
+                      </Sequence>
+                    </If.Then>
+                  </If>
+                  <ui:CloseApplication ContinueOnError="True" DisplayName="Close Application" sap:VirtualizedContainerService.HintSize="711,68" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
+                    <ui:CloseApplication.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='cmd.exe' cls='ConsoleWindowClass' title='Administrator: *' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                    </ui:CloseApplication.Target>
+                  </ui:CloseApplication>
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEachRow.Body>
+          </ui:ForEachRow>
+          <If Condition="[in_Update]" DisplayName="If Update Only" sap:VirtualizedContainerService.HintSize="803,308" sap2010:WorkflowViewState.IdRef="If_8">
+            <If.Else>
+              <Switch x:TypeArguments="x:Int32" DisplayName="Switch - Message" Expression="[botUpdates]" sap:VirtualizedContainerService.HintSize="496,160" sap2010:WorkflowViewState.IdRef="Switch`1_2">
+                <Switch.Default>
+                  <ui:MessageBox ChosenButton="{x:Null}" Buttons="Ok" Caption="Scheduler Bot" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;No scheduled bots found to update.&quot;]" TopMost="True" />
+                </Switch.Default>
+                <ui:MessageBox ChosenButton="{x:Null}" x:Key="1" Buttons="Ok" Caption="Scheduler Bot" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[&quot;All bots were already scheduled for the latest version.&quot;]" TopMost="True" />
+                <ui:MessageBox ChosenButton="{x:Null}" x:Key="2" Buttons="Ok" Caption="Scheduler Bot" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_3" Text="[&quot;All scheduled bots updated to the latest version.&quot;]" TopMost="True" />
+              </Switch>
+            </If.Else>
+          </If>
+        </Sequence>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>
